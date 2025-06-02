@@ -1,63 +1,104 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html><html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <title>Mensagem Secreta 💕</title>
-    <style>
-        body {
-            background-image: url('https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            color: #fff;
-            text-shadow: 1px 1px 4px #000;
-        }
-        #message {
-            display: none;
-            font-size: 1.5em;
-            text-align: center;
-            max-width: 500px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 1em;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #c2185b;
-            color: #fff;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Tem uma mensagem escondida aqui...</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      overflow: hidden;
+      background: #000;
+    }.stars {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+.message-box {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 0 20px #fff3;
+  z-index: 1;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+  </style>
 </head>
 <body>
-    <h2>Tem uma mensagem escondida aqui... 🌌</h2>
-    <p>Digite a senha mágica:</p>
-    <input type="password" id="passwordInput" placeholder="Digite a senha...">
-    <button onclick="checkPassword()">Enviar</button><div id="message">
-    <p>nada não... só queria que soubesse que eu sou completamente apaixonado por vc e que torço muito por vc, você é uma mina incrível e te admiro mto. Te amo 💕</p>
-</div>
+  <canvas id="starCanvas"></canvas>  <div class="message-box">
+    <h1>💫 Mensagem Secreta 💫</h1>
+    <p>Só queria que soubesse que eu sou completamente apaixonado por você e que torço muito por você. Você é uma mina incrível e te admiro muito. Te amo.</p>
+    <p>⭐ Dica: tente desenhar um dente com as estrelas na tela! ⭐</p>
+  </div>  <script>
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
-<script>
-    function checkPassword() {
-        const password = document.getElementById('passwordInput').value;
-        if (password.toLowerCase() === 'mimadinha') {
-            document.getElementById('message').style.display = 'block';
-        } else {
-            alert('Senha errada! Tenta de novo 😉');
-        }
+    const stars = [];
+    for (let i = 0; i < 200; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.5,
+        opacity: Math.random(),
+        speed: Math.random() * 0.5
+      });
     }
-</script>
 
-</body>
+    function animateStars() {
+      ctx.clearRect(0, 0, width, height);
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        ctx.fill();
+        star.opacity += star.speed * (Math.random() > 0.5 ? 1 : -1);
+        if (star.opacity < 0) star.opacity = 0;
+        if (star.opacity > 1) star.opacity = 1;
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    animateStars();
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+  </script></body>
 </html>
