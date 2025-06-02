@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <title>Tem uma mensagem escondida aqui...</title>
+  <title>Mensagem Secreta</title>
   <style>
     body, html {
       height: 100%;
@@ -10,56 +10,72 @@
       color: #fff;
       overflow: hidden;
       background: #000;
-    }.stars {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  animation: twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle {
-  from { opacity: 0.2; }
-  to { opacity: 1; }
-}
-
-.message-box {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.6);
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
-  max-width: 500px;
-  box-shadow: 0 0 20px #fff3;
-  z-index: 1;
-}
-
-h1 {
-  margin-bottom: 20px;
-}
-
-p {
-  font-size: 1.2em;
-  line-height: 1.5em;
-}
-
-canvas {
+    }canvas {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 0;
 }
 
+.container {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 20px #fff3;
+  z-index: 1;
+  max-width: 400px;
+}
+
+input[type="password"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 10px;
+  width: 80%;
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.hidden-message {
+  display: none;
+  margin-top: 20px;
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+
   </style>
 </head>
 <body>
-  <canvas id="starCanvas"></canvas>  <div class="message-box">
+  <canvas id="starCanvas"></canvas>  <div class="container">
     <h1>💫 Mensagem Secreta 💫</h1>
-    <p>Só queria que soubesse que eu sou completamente apaixonado por você e que torço muito por você. Você é uma mina incrível e te admiro muito. Te amo.</p>
-    <p>⭐ Dica: tente desenhar um dente com as estrelas na tela! ⭐</p>
+    <input type="password" id="password" placeholder="Digite a senha...">
+    <button onclick="checkPassword()">Entrar</button>
+    <div class="hidden-message" id="hiddenMessage">
+      Só queria que soubesse que eu sou completamente apaixonado por você e que torço muito por você. Você é uma mina incrível e te admiro muito. Te amo.
+    </div>
   </div>  <script>
+    function checkPassword() {
+      const input = document.getElementById('password').value;
+      if (input.toLowerCase() === 'mimadinha') {
+        document.getElementById('hiddenMessage').style.display = 'block';
+      } else {
+        alert('Senha incorreta! Tente novamente.');
+      }
+    }
+
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
     let width = window.innerWidth;
